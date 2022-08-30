@@ -3,8 +3,14 @@ __license__ = "MIT"
 __date__ = "2022/08"
 __version__ = "1.0"
 
+DESCRIPTION = """\
+Simple script to recenter and symmetrize MRC file.
+Example: mrccleaner -f INPUT.mrc -o OUTPUT.mrc
+"""
+
 import sys
 import subprocess
+
 
 def try_import_and_install(package:str, shortname=""):
     """
@@ -27,9 +33,7 @@ def try_import_and_install(package:str, shortname=""):
         globals()[importname] = __import__(package)
 
 
-try_import_and_install("mrcfile")
-try_import_and_install("numpy","np")
-try_import_and_install("argparse")
+
 
 
 
@@ -38,7 +42,7 @@ def parseArg():
     Parse Arguments
     @return: dictionnary of arguments
     """
-    arguments = argparse.ArgumentParser(description="Simple script to recenter and symmetrize MRC file.")
+    arguments = argparse.ArgumentParser(description=DESCRIPTION)
     arguments.add_argument('-f', "--file", help="Input MRC file", required=True, type=str)
     arguments.add_argument('-o', '--output', help="Output file (mrc)", default="output.mrc")
     
@@ -69,7 +73,19 @@ def transform_mrc(inputFile:str, outputFile:str):
         mrc.set_data(correctMRC, )
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Just the main function
+    """
+
+    if len(sys.argv) < 2 :
+        print(DESCRIPTION)
+        sys.exit(1)
+    #Importing packages
+    try_import_and_install("mrcfile")
+    try_import_and_install("numpy","np")
+    try_import_and_install("argparse")
+
     args = parseArg()
 
     inputFile = args["file"]
@@ -79,4 +95,8 @@ if __name__ == "__main__":
     print(f"---- Input file: {inputFile}")
     print(f"---- Output file: {outputFile}")
     transform_mrc(inputFile, outputFile)
+
+if __name__ == "__main__":
+
+    main()
 
