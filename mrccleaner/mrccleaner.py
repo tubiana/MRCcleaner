@@ -50,6 +50,24 @@ def parseArg():
 
     return (args)
 
+
+def make_it_square(mrcArray):
+    """
+    Calculate the size and make it square...
+    """
+    x = mrcArray.shape[0]
+    y = mrcArray.shape[1]
+    maxsize = np.min([x,y])
+    #Only on X now. Patch will come later if needed....
+    if y>maxsize:
+        diffX = np.abs(maxsize - y)
+        remove = int(diffX/2)
+        mrcArray = mrcArray[:,remove:-remove]
+
+    return mrcArray
+    
+
+
 def transform_mrc(inputFile:str, outputFile:str):
     """
     Read MRC files and transform them with 
@@ -63,11 +81,18 @@ def transform_mrc(inputFile:str, outputFile:str):
     with mrcfile.open(inputFile) as mrc:
         im = mrc.data
 
+
+    #Cut this fucking middle line
+    x=im.shape[0]
+    halfx = int(x/2)
+    im = np.delete(im, halfx, axis=0)
     shifted_mrc = np.fft.fftshift(im[:-1,:], axes=0)
     #Now we flipp the centered shifted MRC file, and we invert it (because after A LOT of tries... This has to be done....)
 
     correctMRC = np.concatenate((np.flip(shifted_mrc[::-1,::]), shifted_mrc), axis=1)
     #Correct... Hopefully!
+
+    correctMRC = make_it_square(correctMRC)
 
     with mrcfile.new(outputFile, overwrite=True) as mrc:
         mrc.set_data(correctMRC, )
