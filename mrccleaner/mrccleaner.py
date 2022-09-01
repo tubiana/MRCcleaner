@@ -1,10 +1,11 @@
 __author__ = "Thibault TUBIANA"
 __license__ = "MIT"
 __date__ = "2022/08"
-__version__ = "1.0"
+from .version import __version__
 
-DESCRIPTION = """\
-Simple script to recenter and symmetrize MRC file.
+DESCRIPTION = f"""\
+MRCCLEANER Version {__version__}
+Simple script to recenter and symmetrize powerspectrup in MRC files.
 Example: mrccleaner -f INPUT.mrc -o OUTPUT.mrc
 """
 

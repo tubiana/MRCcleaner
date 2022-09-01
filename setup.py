@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 MAJOR = 1
 MINOR = 2
-PATCH = 0
+PATCH = 1
 VERSION = "{}.{}.{}".format(MAJOR, MINOR, PATCH)
 
 with open("mrccleaner/version.py", "w") as f:

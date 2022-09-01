@@ -1,0 +1,11 @@
+mrccleaner.egg-info/top_level.txt
+setup.py
+mrccleaner.egg-info/SOURCES.txt
+mrccleaner.egg-info/requires.txt
+mrccleaner.egg-info/PKG-INFO
+mrccleaner.egg-info/entry_points.txt
+mrccleaner.egg-info/dependency_links.txt
+mrccleaner/__pycache__/version.cpython-39.pyc
+mrccleaner/__pycache__/mrccleaner.cpython-39.pyc
+mrccleaner/__pycache__/__init__.cpython-39.pyc
+dist/*
