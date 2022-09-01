@@ -64,6 +64,9 @@ def make_it_square(mrcArray):
         remove = int(diffX/2)
         mrcArray = mrcArray[:,remove:-remove]
 
+    print(mrcArray.shape)
+    1/0
+
     return mrcArray
     
 
@@ -85,15 +88,21 @@ def transform_mrc(inputFile:str, outputFile:str):
     #Cut this fucking middle line
     x=im.shape[0]
     halfx = int(x/2)
-    im = np.delete(im, halfx, axis=0)
-    shifted_mrc = np.fft.fftshift(im[:-1,:], axes=0)
+    #im = np.delete(im, halfx, axis=0)
+    #shifted_mrc = np.fft.fftshift(im[:-1,:], axes=0)
+    shifted_mrc = np.fft.fftshift(im, axes=0)
+
     #Now we flipp the centered shifted MRC file, and we invert it (because after A LOT of tries... This has to be done....)
 
-    correctMRC = np.concatenate((np.flip(shifted_mrc[::-1,::]), shifted_mrc), axis=1)
-    #Correct... Hopefully!
+    
+    #This line FLIP the shifted mrc AND reverse it vertically AND remove the first pixel column.
+    correctMRC = np.concatenate((np.flip(shifted_mrc[::-1,1::]), shifted_mrc), axis=1)
+    
 
-    correctMRC = make_it_square(correctMRC)
-
+    
+    #Make it square again...
+    correctMRC = correctMRC[:,:-1]
+    print(correctMRC.shape)
     with mrcfile.new(outputFile, overwrite=True) as mrc:
         mrc.set_data(correctMRC, )
 
