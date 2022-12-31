@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/530690077.svg)](https://zenodo.org/badge/latestdoi/530690077)
+___
 # mrcCleaner
 Correct a MRC file with fftshift and mirror it to have it fully symmetrical and spherical.
 
